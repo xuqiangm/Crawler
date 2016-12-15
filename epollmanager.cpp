@@ -57,17 +57,17 @@ int EpollManager::createEpoll(int& epfd)
 	return SUCCESS;
 }
 
-int EpollManager::registerEvent(int epfd,int opration, int fd,int state)
+int EpollManager::registerEvent(int epfd, OPRATION opration, int fd, int state)
 {
 	struct epoll_event ev;
 	ev.events = state;
 	ev.data.fd = fd;
-	epoll_ctl(epfd, action, fd, &ev);
+	epoll_ctl(epfd, opration, fd, &ev);
 
 	return SUCCESS;
 }
 
-int EpollManager::doEpoll(int epollfd)
+void EpollManager::doEpoll(int epollfd)
 {
   struct epoll_event events[MAX_EVENTS_SIZE];
   int ready_num;
@@ -76,7 +76,6 @@ int EpollManager::doEpoll(int epollfd)
     ready_num = epoll_wait(epollfd, epoll_event, MAX_EVENTS_SIZE, -1);
     handleEvents(epollfd, events, ready_num);
   }
-  return SUCCESS;
 }
 
 int EpollManager::handleEvents(int epollfd, struct epoll_event* events, int num)
@@ -86,7 +85,7 @@ int EpollManager::handleEvents(int epollfd, struct epoll_event* events, int num)
 
 int EpollManager::closeEpoll(int epfd)
 {
-    close(fd);
+    close(epfd);
 
     return SUCCESS;
 }

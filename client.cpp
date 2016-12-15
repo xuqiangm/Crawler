@@ -30,7 +30,7 @@ int Client::run()
 
 int Client::connect(int& socketfd,const std::string url, const unsigned int port)
 {
-	return TCPMN().connectToServer(socketfd, url, port);
+	return SUCCESS;
 }
 
 int Client::sendHomePageRequest(int socketfd)
